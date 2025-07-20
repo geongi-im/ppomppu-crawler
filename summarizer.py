@@ -20,7 +20,7 @@ class PostSummarizer:
             if not content and url:
                 content = fetch_post_content(url)
 
-            model = "gemini-2.5-flash-lite-preview-06-17"
+            model = "gemini-2.0-flash-lite"
             
             # 프롬프트 템플릿에 title과 content를 포함
             user_prompt_template = open("user_prompt.md", "r", encoding="utf-8").read()
