@@ -11,6 +11,7 @@ class PostSummarizer:
         self.api_key = os.getenv("GEMINI_API_KEY")
         self.client = genai.Client(api_key=self.api_key)
         self.logger = LoggerUtil().get_logger()
+        self.prompt_path = os.path.dirname(os.path.abspath(__file__))
     
     def summarize_post(self, title, content=None, url=None):
         """게시글 요약 생성"""
@@ -26,7 +27,7 @@ class PostSummarizer:
             model = "gemini-2.0-flash-lite"
             
             # 프롬프트 템플릿에 title과 content를 포함
-            user_prompt_template = open("user_prompt.md", "r", encoding="utf-8").read()
+            user_prompt_template = open(os.path.join(self.prompt_path, "user_prompt.md"), "r", encoding="utf-8").read()
             user_prompt_with_data = f"{user_prompt_template}\n\n제목: {title}\n\n본문 내용:\n{content}"
             
             contents = [
@@ -42,7 +43,9 @@ class PostSummarizer:
             temperature=0.7,
             response_mime_type="text/plain",
             system_instruction=[
-                types.Part.from_text(text=open("system_prompt.md", "r", encoding="utf-8").read()),
+                types.Part.from_text(
+                    text=open(os.path.join(self.prompt_path, "system_prompt.md"), "r", encoding="utf-8").read()
+                ),
             ],
         )
             
