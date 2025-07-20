@@ -1,0 +1,5 @@
+requests==2.31.0
+beautifulsoup4==4.12.2
+google-genai==1.26.0
+python-dotenv==1.1.1
+lxml==6.0.0
