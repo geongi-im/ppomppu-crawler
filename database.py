@@ -4,8 +4,8 @@ from datetime import datetime
 from utils.logger_util import LoggerUtil
 
 class PostDatabase:
-    def __init__(self, db_path='posts.db'):
-        self.db_path = db_path
+    def __init__(self):
+        self.db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "posts.db")
         self.logger = LoggerUtil().get_logger()
         self.init_database()
     
