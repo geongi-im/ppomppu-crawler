@@ -20,11 +20,14 @@ class PostSummarizer:
             if not content and url:
                 content = fetch_post_content(url)
 
+            if not content:
+                raise Exception("본문 내용을 가져올 수 없습니다.")
+
             model = "gemini-2.0-flash-lite"
             
             # 프롬프트 템플릿에 title과 content를 포함
             user_prompt_template = open("user_prompt.md", "r", encoding="utf-8").read()
-            user_prompt_with_data = f"{user_prompt_template}\n\n제목: {title}\n\n본문 내용:\n{content if content else '본문 내용을 가져올 수 없습니다.'}"
+            user_prompt_with_data = f"{user_prompt_template}\n\n제목: {title}\n\n본문 내용:\n{content}"
             
             contents = [
                 types.Content(
@@ -48,7 +51,8 @@ class PostSummarizer:
                 contents=contents,
                 config=generate_content_config
             )
-            return response.text.strip()
+            result = response.text.strip().replace("```", "").replace("```text", "")
+            return result
             
         except Exception as e:
             self.logger.error(f"Error generating summary: {e}")
