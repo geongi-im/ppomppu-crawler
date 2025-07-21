@@ -55,7 +55,7 @@ def main():
                     logger.info(f"게시글 {post['post_id']} 요약 완료.")
                     
                     # 텔레그램 메시지 구성 및 전송
-                    message = f"[제목]\n{post['title']}\n\n[요약]\n{summary}\n\n<a href=\"{post['url']}\">게시글 바로가기</a>"
+                    message = f"<a href=\"{post['url']}\">{post['title']}</a>\n\n[요약]\n{summary}"
                     try:
                         telegram_bot.send_message(message)
                         logger.info(f"게시글 {post['post_id']} 전송 완료.")

@@ -54,7 +54,7 @@ class PostSummarizer:
                 contents=contents,
                 config=generate_content_config
             )
-            result = response.text.strip().replace("```", "").replace("```text", "")
+            result = response.text.strip().replace("```", "").replace("```text", "").replace("text", "")
             return result
             
         except Exception as e:
